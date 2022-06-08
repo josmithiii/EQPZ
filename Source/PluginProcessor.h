@@ -74,16 +74,21 @@ FilterAttachment (juce::AudioProcessorValueTreeState& state, FilterBand& filter,
 
 void setSampleRate (double sampleRate);
 bool isActive() const { return active; }
+juce::String getPrefix();
 
 std::function<void(const FilterAttachment&)> postFilterUpdate;
+    
+    
 
 juce::dsp::IIR::Coefficients<float>::Ptr coefficients;
 double                                   sampleRate = 0.0;
 
 private:
-void updateFilter();
 //process for finding poles and zeros
 void findPZ(juce::dsp::IIR::Coefficients<float>::Ptr coefficients);
+void updateFilter();
+
+
     
 
 juce::AudioProcessorValueTreeState& state;
@@ -97,10 +102,14 @@ std::atomic<float>  frequency  { 1000.0f };
 std::atomic<float>  gain       { 0.0f };
 std::atomic<float>  quality    { 1.0f };
 std::atomic<bool>   active     { true };
-std::atomic<float>  poleReal    { 0.0f };
-std::atomic<float>  poleImag    { 0.0f };
-std::atomic<float>  zeroReal    { 0.0f };
-std::atomic<float>  zeroImag    { 0.0f };
+std::atomic<float>  poleReal1    { 0.0f };
+std::atomic<float>  poleImag1    { 0.0f };
+std::atomic<float>  zeroReal1    { 0.0f };
+std::atomic<float>  zeroImag1    { 0.0f };
+std::atomic<float>  poleReal2    { 0.0f };
+std::atomic<float>  poleImag2    { 0.0f };
+std::atomic<float>  zeroReal2    { 0.0f };
+std::atomic<float>  zeroImag2    { 0.0f };
     
     
 AttachedValue<FilterType> typeAttachment;

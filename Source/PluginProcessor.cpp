@@ -17,10 +17,14 @@ namespace IDs
     static juce::String paramFreq    { "freq" };
     static juce::String paramGain    { "gain" };
     static juce::String paramQuality { "quality" };
-    static juce::String paramPoleReal  { "pole-real" };
-    static juce::String paramPoleImag  { "pole-imag" };
-    static juce::String paramZeroReal  { "zero-real" };
-    static juce::String paramZeroImag  { "zero-imag" };
+    static juce::String paramPoleReal1  { "pole-real1" };
+    static juce::String paramPoleImag1  { "pole-imag1" };
+    static juce::String paramZeroReal1  { "zero-real1" };
+    static juce::String paramZeroImag1  { "zero-imag1" };
+    static juce::String paramPoleReal2  { "pole-real2" };
+    static juce::String paramPoleImag2  { "pole-imag2" };
+    static juce::String paramZeroReal2  { "zero-real2" };
+    static juce::String paramZeroImag2  { "zero-imag2" };
     static juce::String paramActive  { "active" };
 }
 
@@ -46,10 +50,14 @@ std::unique_ptr<juce::AudioProcessorParameterGroup> createParametersForFilter (c
                                                                                float frequency,
                                                                                float gain    = 0.0f,
                                                                                float quality = 1.0f,
-                                                                               float poleReal = 0.0f,
-                                                                               float poleImag = 0.0f,
-                                                                               float zeroReal = 0.0f,
-                                                                               float zeroImag = 0.0f,
+                                                                               float poleReal1 = 0.0f,
+                                                                               float poleImag1= 0.0f,
+                                                                               float zeroReal1 = 0.0f,
+                                                                               float zeroImag1 = 0.0f,
+                                                                               float poleReal2 = 0.0f,
+                                                                               float poleImag2= 0.0f,
+                                                                               float zeroReal2 = 0.0f,
+                                                                               float zeroImag2 = 0.0f,
                                                                                bool  active  = true)
 {
     auto typeParameter = std::make_unique<juce::AudioParameterChoice> (prefix + IDs::paramType,
@@ -86,34 +94,67 @@ std::unique_ptr<juce::AudioProcessorParameterGroup> createParametersForFilter (c
                                                                       [](float value, int) { return juce::String (value, 1); },
                                                                       [](const juce::String& text) { return text.getFloatValue(); });
 
-    auto poleRealParameter = std::make_unique<juce::AudioParameterFloat> (prefix + IDs::paramPoleReal,
-                                                                      name + ": " + TRANS ("Pole Real Part"),
-                                                                      juce::NormalisableRange<float> {-0.999f, 0.999f}, poleReal,
+    auto poleRealParameter1 = std::make_unique<juce::AudioParameterFloat> (prefix + IDs::paramPoleReal1,
+                                                                      name + ": " + TRANS ("Pole Real Part1"),
+                                                                      juce::NormalisableRange<float> {-0.999f, 0.999f}, poleReal1,
                                                                       juce::String(),
                                                                       juce::AudioProcessorParameter::genericParameter,
                                                                       [](float value, int) { return juce::String (value, 1); },
                                                                       [](const juce::String& text) { return text.getFloatValue(); });
 
-    auto poleImagParameter = std::make_unique<juce::AudioParameterFloat> (prefix + IDs::paramPoleImag,
-                                                                      name + ": " + TRANS ("Pole Imag Part"),
-                                                                          juce::NormalisableRange<float> {-0.999f, 0.999f}, poleImag,
+    auto poleImagParameter1 = std::make_unique<juce::AudioParameterFloat> (prefix + IDs::paramPoleImag1,
+                                                                      name + ": " + TRANS ("Pole Imag Part1"),
+                                                                          juce::NormalisableRange<float> {-0.999f, 0.999f}, poleImag1,
                                                                       juce::String(),
                                                                       juce::AudioProcessorParameter::genericParameter,
                                                                       [](float value, int) { return juce::String (value, 1); },
                                                                       [](const juce::String& text) { return text.getFloatValue(); });
 
-    auto zeroRealParameter = std::make_unique<juce::AudioParameterFloat> (prefix + IDs::paramZeroReal,
-                                                                      name + ": " + TRANS ("Zero Real Part"),
-                                                                          juce::NormalisableRange<float> {-0.999f, 0.999f}, zeroReal,
+    auto zeroRealParameter1 = std::make_unique<juce::AudioParameterFloat> (prefix + IDs::paramZeroReal1,
+                                                                      name + ": " + TRANS ("Zero Real Part1"),
+                                                                          juce::NormalisableRange<float> {-0.999f, 0.999f}, zeroReal1,
                                                                           
                                                                       juce::String(),
                                                                       juce::AudioProcessorParameter::genericParameter,
                                                                       [](float value, int) { return juce::String (value, 1); },
                                                                       [](const juce::String& text) { return text.getFloatValue(); });
 
-    auto zeroImagParameter = std::make_unique<juce::AudioParameterFloat> (prefix + IDs::paramZeroImag,
-                                                                      name + ": " + TRANS ("Zero Imag Part"),
-                                                                          juce::NormalisableRange<float> {-0.999f, 0.999f}, zeroImag,
+    auto zeroImagParameter1 = std::make_unique<juce::AudioParameterFloat> (prefix + IDs::paramZeroImag1,
+                                                                      name + ": " + TRANS ("Zero Imag Part1"),
+                                                                          juce::NormalisableRange<float> {-0.999f, 0.999f}, zeroImag1,
+                                                                      juce::String(),
+                                                                      juce::AudioProcessorParameter::genericParameter,
+                                                                      [](float value, int) { return juce::String (value, 1); },
+                                                                      [](const juce::String& text) { return text.getFloatValue(); });
+    
+    auto poleRealParameter2 = std::make_unique<juce::AudioParameterFloat> (prefix + IDs::paramPoleReal2,
+                                                                      name + ": " + TRANS ("Pole Real Part2"),
+                                                                      juce::NormalisableRange<float> {-0.999f, 0.999f}, poleReal2,
+                                                                      juce::String(),
+                                                                      juce::AudioProcessorParameter::genericParameter,
+                                                                      [](float value, int) { return juce::String (value, 1); },
+                                                                      [](const juce::String& text) { return text.getFloatValue(); });
+
+    auto poleImagParameter2 = std::make_unique<juce::AudioParameterFloat> (prefix + IDs::paramPoleImag2,
+                                                                      name + ": " + TRANS ("Pole Imag Part2"),
+                                                                          juce::NormalisableRange<float> {-0.999f, 0.999f}, poleImag2,
+                                                                      juce::String(),
+                                                                      juce::AudioProcessorParameter::genericParameter,
+                                                                      [](float value, int) { return juce::String (value, 1); },
+                                                                      [](const juce::String& text) { return text.getFloatValue(); });
+
+    auto zeroRealParameter2 = std::make_unique<juce::AudioParameterFloat> (prefix + IDs::paramZeroReal2,
+                                                                      name + ": " + TRANS ("Zero Real Part1"),
+                                                                          juce::NormalisableRange<float> {-0.999f, 0.999f}, zeroReal2,
+                                                                          
+                                                                      juce::String(),
+                                                                      juce::AudioProcessorParameter::genericParameter,
+                                                                      [](float value, int) { return juce::String (value, 1); },
+                                                                      [](const juce::String& text) { return text.getFloatValue(); });
+
+    auto zeroImagParameter2 = std::make_unique<juce::AudioParameterFloat> (prefix + IDs::paramZeroImag2,
+                                                                      name + ": " + TRANS ("Zero Imag Part2"),
+                                                                          juce::NormalisableRange<float> {-0.999f, 0.999f}, zeroImag2,
                                                                       juce::String(),
                                                                       juce::AudioProcessorParameter::genericParameter,
                                                                       [](float value, int) { return juce::String (value, 1); },
@@ -133,10 +174,14 @@ std::unique_ptr<juce::AudioProcessorParameterGroup> createParametersForFilter (c
                                                                        std::move (actvParameter),
                                                                        std::move (freqParameter),
                                                                        std::move (qltyParameter),
-                                                                       std::move (poleRealParameter),
-                                                                       std::move (poleImagParameter),
-                                                                       std::move (zeroRealParameter),
-                                                                       std::move (zeroImagParameter),
+                                                                       std::move (poleRealParameter1),
+                                                                       std::move (poleImagParameter1),
+                                                                       std::move (zeroRealParameter1),
+                                                                       std::move (zeroImagParameter1),
+                                                                       std::move (poleRealParameter2),
+                                                                       std::move (poleImagParameter2),
+                                                                       std::move (zeroRealParameter2),
+                                                                       std::move (zeroImagParameter2),
                                                                        std::move (gainParameter));
 
     return group;
@@ -291,7 +336,8 @@ void PolesNZerosAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
     filter.setBypassed<5>(attachment6.isActive() == false);
 
     filter.get<6>().setGainLinear (gain);
-
+    
+    
     // GUI MAGIC: measure before processing
     if (inputAnalysing.get())
         inputAnalyser->pushSamples (buffer);
@@ -330,6 +376,52 @@ PolesNZerosAudioProcessor::FilterAttachment::FilterAttachment (juce::AudioProces
     updateFilter();
 }
 
+juce::String PolesNZerosAudioProcessor::FilterAttachment::getPrefix()
+{
+    return prefix;
+}
+
+void findPZ(juce::dsp::IIR::Coefficients<float>::Ptr coefficients){
+    
+    //first get values of coefficients
+    //juce::Array<float> coeffVals = coefficients->coefficients;
+    
+    //cast them to complex numbers for safekeeping ( assuming that coefficients are real...which seems reasonable)
+    //zeros (numerator) first
+    /*
+    std::complex<float> a_zero(coeffVals[0], 0.0f);
+    std::complex<float> b_zero(coeffVals[1], 0.0f);
+    std::complex<float> c_zero(coeffVals[2], 0.0f);
+    //poles (denom) second
+    std::complex<float> a_pole(coeffVals[3], 0.0f);
+    std::complex<float> b_pole(coeffVals[4], 0.0f);
+    std::complex<float> c_pole(0.0f, 0.0f); //array only has length 5 for second order filters
+     */
+    
+    //find roots
+    //std::complex<float> zero1 = ((-b_zero) + sqrt((pow(b_zero,2.0f) - (4.0f*a_zero*c_zero))))/(2.0f*a_zero);
+    //std::complex<float> zero2 = ((-b_zero) - sqrt((pow(b_zero,2.0f) - (4.0f*a_zero*c_zero))))/(2.0f*a_zero);
+    //std::complex<float> pole1 = ((-b_pole) + sqrt((pow(b_pole,2.0f) - (4.0f*a_pole*c_pole))))/(2.0f*a_pole);
+    //std::complex<float> pole2 = ((-b_pole) - sqrt((pow(b_pole,2.0f) - (4.0f*a_pole*c_pole))))/(2.0f*a_pole);
+
+   // std::cout <<"zero 1 is "<<zero1<<std::endl;
+   // std::cout <<"zero 2 is "<<zero2<<std::endl;
+   // std::cout <<"pole 1 is "<<pole1<<std::endl;
+   // std::cout <<"pole 2 is "<<pole2<<std::endl;
+
+
+
+    
+    
+    //take .real and .imag
+    //return these somewhere
+    //once the poles and zeros are found, set them in a pole/zero set function
+    //juce::Value paramToEdit = treeState.getParameterAsValue("specCent");, use the same call here (since they
+    //are in the tree
+    return;
+    
+}
+
 void PolesNZerosAudioProcessor::FilterAttachment::updateFilter()
 {
     if (sampleRate < 20.0)
@@ -353,10 +445,17 @@ void PolesNZerosAudioProcessor::FilterAttachment::updateFilter()
     }
 
     {
-        //calling and then deferencing the coefficients like this will get you the value
-        //but why is there inly one value? Shouldn't there be like 4 or 6?
-        float* test = coefficients->getRawCoefficients();
-        std::cout << *test << "\n";
+        
+        float filtOrder = coefficients->getFilterOrder();
+        jassert (filtOrder == 2);
+        
+        juce::Array<float> testArr = coefficients->coefficients;
+        std::cout <<"test array abilities"<<testArr[5]<<std::endl;
+        std::cout <<"test array size "<< testArr.size() <<std::endl;
+        
+    
+        
+        
         
         juce::ScopedLock processLock (callbackLock);
         *filter.state = *coefficients;
@@ -367,23 +466,8 @@ void PolesNZerosAudioProcessor::FilterAttachment::updateFilter()
     if (postFilterUpdate)
         postFilterUpdate (*this);
 }
-void findPZ(juce::dsp::IIR::Coefficients<float>::Ptr coefficients){
-    
-    //first get value(s) of coefficients
-    float* coeffPtr = coefficients->getRawCoefficients();
-    float coeffVal = *coeffPtr;
-    //somehow cast to complex...are the coefficients assumed to be real? Probably
-    std::complex<float> coeffs(coeffVal, 0.0f);
-    //do quadratic formula with them
-    //take .real and .imag
-    //return these somewhere
-    //once the poles and zeros are found, set them in a pole/zero set function
-    //juce::Value paramToEdit = treeState.getParameterAsValue("specCent");
-    return;
-    
-  
-    // float
-}
+
+
 
 
 void PolesNZerosAudioProcessor::FilterAttachment::setSampleRate (double sampleRateToUse)
@@ -461,11 +545,78 @@ void PolesNZerosAudioProcessor::parameterChanged (const juce::String&, float)
 
 void PolesNZerosAudioProcessor::handleAsyncUpdate()
 {
+    
+    
+    
     std::vector<juce::dsp::IIR::Coefficients<float>::Ptr> coefficients;
-    for (auto* a : attachments)
-        if (a->isActive())
-            coefficients.push_back (a->coefficients);
+    int count = 1;
+    juce::dsp::IIR::Coefficients<float>::Ptr holder;
+    
+    for (auto* a : attachments){
+        if (a->isActive()) {
+            
+            juce::String prefixMaybe = a->getPrefix();
+            std::cout<<"prefix is "<< prefixMaybe << std::endl;
+        
+            juce::Value ParamToEdit_pr1 = treeState.getParameterAsValue(prefixMaybe + "pole-real1");
+            juce::Value ParamToEdit_pi1 = treeState.getParameterAsValue(prefixMaybe + "pole-imag1");
+            juce::Value ParamToEdit_pr2 = treeState.getParameterAsValue(prefixMaybe + "pole-real2");
+            juce::Value ParamToEdit_pi2 = treeState.getParameterAsValue(prefixMaybe + "pole-imag2");
+            juce::Value ParamToEdit_zr1 = treeState.getParameterAsValue(prefixMaybe + "zero-real1");
+            juce::Value ParamToEdit_zi1 = treeState.getParameterAsValue(prefixMaybe + "zero-imag1");
+            juce::Value ParamToEdit_zr2 = treeState.getParameterAsValue(prefixMaybe + "zero-real2");
+            juce::Value ParamToEdit_zi2 = treeState.getParameterAsValue(prefixMaybe + "zero-imag2");
+            
+            //in here do the bit swapping
+            
+            //first get values of coefficients
+            holder = a->coefficients;
+            juce::Array<float> coeffVals = holder->coefficients;
+            //std::cout <<"TEST"<<coeffVals<<std::endl;
+            //cast them to complex numbers for safekeeping ( assuming that coefficients are real...which seems reasonable)
+            //zeros (numerator) first
+            std::complex<float> a_zero(coeffVals[0], 0.0f);
+            std::complex<float> b_zero(coeffVals[1], 0.0f);
+            std::complex<float> c_zero(coeffVals[2], 0.0f);
+            //poles (denom) second
+            std::complex<float> a_pole(coeffVals[3], 0.0f);
+            std::complex<float> b_pole(coeffVals[4], 0.0f);
+            std::complex<float> c_pole(0.0f, 0.0f); //array only has length 5 for second order filters
+            
+            //find roots
+            std::complex<float> zero1 = ((-b_zero) + sqrt((pow(b_zero,2.0f) - (4.0f*a_zero*c_zero))))/(2.0f*a_zero);
+            std::complex<float> zero2 = ((-b_zero) - sqrt((pow(b_zero,2.0f) - (4.0f*a_zero*c_zero))))/(2.0f*a_zero);
+            std::complex<float> pole1 = ((-b_pole) + sqrt((pow(b_pole,2.0f) - (4.0f*a_pole*c_pole))))/(2.0f*a_pole);
+            std::complex<float> pole2 = ((-b_pole) - sqrt((pow(b_pole,2.0f) - (4.0f*a_pole*c_pole))))/(2.0f*a_pole);
 
+            std::cout <<"filter is "<<count<<std::endl;
+            std::cout <<"zero 1 is "<<zero1<<std::endl;
+            std::cout <<"zero 2 is "<<zero2<<std::endl;
+            std::cout <<"pole 1 is "<<pole1<<std::endl;
+            std::cout <<"pole 2 is "<<pole2<<std::endl;
+        
+            count = count + 1;
+        
+            ParamToEdit_pr1 = pole1.real();
+            ParamToEdit_pi1 = pole1.imag();
+            ParamToEdit_pr2 = pole2.real();
+            ParamToEdit_pi2 = pole2.imag();
+            ParamToEdit_zr1 = zero1.real();
+            ParamToEdit_zi1 = zero1.imag();
+            ParamToEdit_zr2 = zero2.real();
+            ParamToEdit_zi2 = zero2.imag();
+        
+        
+        //repaint(ParamToEdit_pr1);
+       
+        
+            //almost done I think!
+            coefficients.push_back (a->coefficients);
+    //set the coefficients or steal them depending
+    //be careful with the listener
+        }
+    
+    }
 
     
     
@@ -477,7 +628,7 @@ void PolesNZerosAudioProcessor::handleAsyncUpdate()
 
 juce::ValueTree PolesNZerosAudioProcessor::createGuiValueTree()
 {
-    juce::String text (BinaryData::magicJOS_xml, BinaryData::magicJOS_xmlSize);
+    juce::String text (BinaryData::magic_xml, BinaryData::magic_xmlSize);
     return juce::ValueTree::fromXml (text);
 }
 
