@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT id="DSSS1f" name="PolesNZeros" projectType="audioplug" useAppConfig="0"
-              addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1">
+              addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1"
+              pluginFormats="buildStandalone">
   <MAINGROUP id="WNjNai" name="PolesNZeros">
     <GROUP id="{6C637885-BA1B-46B7-CC61-AFC984438B63}" name="Source">
       <FILE id="sLYkrL" name="magic.xml" compile="0" resource="1" file="Source/magic.xml"/>

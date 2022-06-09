@@ -95,7 +95,7 @@
               background-color=""/>
         <XYDragComponent border="0" margin="0" padding="0" background-color="00000000"
                          xy-crosshair="horizontal"/>
-        <XYDragComponentJOS border="0" margin="0" padding="0" background-color="00000000"
+        <XYDragComponent border="0" margin="0" padding="0" background-color="00000000"
                                xy-radius="10" xy-crosshair="no-crosshair"/>
       </Types>
       <Palettes>
@@ -148,29 +148,29 @@
         </View>
         <View class="plot-view" background-gradient="linear-gradient(0,0% ff5e5f6f,100% ff030303)"
               caption="Poles and Zeros" display="contents">
-          <XYDragComponentJOS class="nomargin q1" parameter-x="P1real" parameter-y="P1imag"
+          <XYDragComponent class="nomargin q1" parameter-x="P1real" parameter-y="P1imag"
                                  tooltip="Drag Pole P1 in Complex Plane"/>
-          <XYDragComponentJOS class="nomargin q1" parameter-x="Z1real" parameter-y="Z1imag"
+          <XYDragComponent class="nomargin q1" parameter-x="Z1real" parameter-y="Z1imag"
                                  tooltip="Drag Zero Z1 in Complex Plane" xy-zero="xy-pole"/>
-          <XYDragComponentJOS class="nomargin q2" parameter-x="P2real" parameter-y="P2imag"
+          <XYDragComponent class="nomargin q2" parameter-x="P2real" parameter-y="P2imag"
                                  tooltip="Drag Pole P2 in Complex Plane"/>
-          <XYDragComponentJOS class="nomargin q2" parameter-x="Z2real" parameter-y="Z2imag"
+          <XYDragComponent class="nomargin q2" parameter-x="Z2real" parameter-y="Z2imag"
                                  tooltip="Drag Zero Z2 in Complex Plane" xy-zero="xy-pole"/>
-          <XYDragComponentJOS class="nomargin q3" parameter-x="Z3real" parameter-y="Z3imag"
+          <XYDragComponent class="nomargin q3" parameter-x="Z3real" parameter-y="Z3imag"
                                  tooltip="Drag Zero Z3 in Complex Plane"/>
-          <XYDragComponentJOS class="nomargin q3" parameter-x="P3real" parameter-y="P3imag"
+          <XYDragComponent class="nomargin q3" parameter-x="P3real" parameter-y="P3imag"
                                  tooltip="Drag Pole P3 in Complex Plane" xy-zero="xy-pole"/>
-          <XYDragComponentJOS class="nomargin q4" parameter-x="Z4real" parameter-y="Z4imag"
+          <XYDragComponent class="nomargin q4" parameter-x="Z4real" parameter-y="Z4imag"
                                  tooltip="Drag Zero Z4 in Complex Plane"/>
-          <XYDragComponentJOS class="nomargin q4" parameter-x="P4real" parameter-y="P4imag"
+          <XYDragComponent class="nomargin q4" parameter-x="P4real" parameter-y="P4imag"
                                  tooltip="Drag Pole P4 in Complex Plane" xy-zero="xy-pole"/>
-          <XYDragComponentJOS class="nomargin q5" parameter-x="P5real" parameter-y="P5imag"
+          <XYDragComponent class="nomargin q5" parameter-x="P5real" parameter-y="P5imag"
                                  tooltip="Drag Pole P5 in Complex Plane"/>
-          <XYDragComponentJOS class="nomargin q5" parameter-x="Z5real" parameter-y="Z5imag"
+          <XYDragComponent class="nomargin q5" parameter-x="Z5real" parameter-y="Z5imag"
                                  tooltip="Drag Zero Z5 in Complex Plane" xy-zero="xy-pole"/>
-          <XYDragComponentJOS class="nomargin q6" parameter-x="P6real" parameter-y="P6imag"
+          <XYDragComponent class="nomargin q6" parameter-x="P6real" parameter-y="P6imag"
                                  tooltip="Drag Pole P6 in Complex Plane"/>
-          <XYDragComponentJOS class="nomargin q6" parameter-x="Z6real" parameter-y="Z6imag"
+          <XYDragComponent class="nomargin q6" parameter-x="Z6real" parameter-y="Z6imag"
                                  tooltip="Drag Zero Z6 in Complex Plane" xy-zero="xy-pole"/>
         </View>
       </View>
