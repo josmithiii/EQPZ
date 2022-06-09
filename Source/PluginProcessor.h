@@ -75,8 +75,8 @@ bool isActive() const { return active; }
 juce::String getPrefix();
 
 std::function<void(const FilterAttachment&)> postFilterUpdate;
-    
-    
+
+
 
 juce::dsp::IIR::Coefficients<float>::Ptr coefficients;
 double                                   sampleRate = 0.0;
@@ -87,7 +87,7 @@ void findPZ(juce::dsp::IIR::Coefficients<float>::Ptr coefficients);
 void updateFilter();
 
 
-    
+
 
 juce::AudioProcessorValueTreeState& state;
 
@@ -110,7 +110,7 @@ std::atomic<float>  zeroReal2    { 0.0f };
 std::atomic<float>  zeroImag2    { 0.0f };
 std::atomic<float>  plotY         { 0.0f };
 std::atomic<float>  plotX        { 0.0f };
-    
+
 AttachedValue<FilterType> typeAttachment;
 AttachedValue<float> frequencyAttachment;
 AttachedValue<float> gainAttachment;
