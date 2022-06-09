@@ -523,7 +523,7 @@ void PolesNZerosAudioProcessor::handleAsyncUpdate()
     juce::dsp::IIR::Coefficients<float>::Ptr holder;
 
     for (auto* a : attachments){
-        if (a->isActive()) {
+        if (1 || a->isActive()) { // FIXME: a->isActive() is always FALSE due to some BUG (in PGM I think)
 
             juce::String prefixMaybe = a->getPrefix();
             std::cout<<"prefix is "<< prefixMaybe << std::endl;
