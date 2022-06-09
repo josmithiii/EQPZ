@@ -81,8 +81,8 @@
           <media max-height="450"/>
         </hidden>
         <pzplot xy-radius="10" xy-crosshair="no-crosshair" xy-dot="xy-pole" recursive="1"/>
-        <pole xy-dot="xy-pole" recursive="1"/>
-        <zero xy-dot="xy-zero" recursive="1"/>
+        <pole xy-dot="xy-pole" xy-crosshair="no-crosshair" recursive="1"/>
+        <zero xy-dot="xy-zero" xy-crosshair="no-crosshair" recursive="1"/>
       </Classes>
       <Types>
         <ComboBox border="0" max-height="40" combo-background="00000000" combo-outline="transparent"
