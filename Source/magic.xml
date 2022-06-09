@@ -149,7 +149,6 @@
         </View>
         <View class="plot-view" background-gradient="linear-gradient(0,0% ff5e5f6f,100% ff030303)"
               caption="Poles and Zeros" display="contents">
-          <XYDragComponent/>
           <XYDragComponent class="pzplot pole nomargin q1" parameter-x="Q1pole-real1" parameter-y="Q1pole-imag1"
                               tooltip="Drag Pole P1 in Complex Plane"/>
           <XYDragComponent class="pzplot pole nomargin q1" parameter-x="Q1pole-real2" parameter-y="Q1pole-imag2"
