@@ -6,7 +6,6 @@
   <MAINGROUP id="WNjNai" name="PolesNZeros">
     <GROUP id="{6C637885-BA1B-46B7-CC61-AFC984438B63}" name="Source">
       <FILE id="sLYkrL" name="magic.xml" compile="0" resource="1" file="Source/magic.xml"/>
-      <FILE id="KI4ziu" name="magicJOS.xml" compile="0" resource="1" file="Source/magicJOS.xml"/>
       <FILE id="fScMOK" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="n9YgEJ" name="PluginProcessor.h" compile="0" resource="0"
