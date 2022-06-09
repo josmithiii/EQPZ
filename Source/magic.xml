@@ -149,6 +149,10 @@
         </View>
         <View class="plot-view" background-gradient="linear-gradient(0,0% ff5e5f6f,100% ff030303)"
               caption="Poles and Zeros" display="contents">
+          <XYDragComponent parameter-x="Q1plotX" parameter-y="Q1plotY" background-color="00FF0000"
+                           xy-horizontal="FFEBBBE0" xy-vertical="FFEBBBE0" xy-horizontal-over="FFEBBBE0"
+                           xy-vertical-over="FFEBBBE0" xy-drag-handle="FFEBBBE0" xy-drag-handle-over="FFEBBBE0"
+                           tab-caption="" pos-x="0" pos-y="0"/>
           <!-- PGM BUG (I presume): classes override from right to left, so "pole" or "zero" must appear before "pzplot" below: -->
           <XYDragComponent class="pole pzplot nomargin q1" parameter-x="Q1pole-real1" parameter-y="Q1pole-imag1"
                               tooltip="Drag Pole P1 in Complex Plane"/>
