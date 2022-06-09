@@ -117,7 +117,6 @@ std::unique_ptr<juce::AudioProcessorParameterGroup> createParametersForFilter (c
     auto zeroRealParameter1 = std::make_unique<juce::AudioParameterFloat> (prefix + IDs::paramZeroReal1,
                                                                       name + ": " + TRANS ("Zero Real Part1"),
                                                                           juce::NormalisableRange<float> {-0.999f, 0.999f}, zeroReal1,
-
                                                                       juce::String(),
                                                                       juce::AudioProcessorParameter::genericParameter,
                                                                       [](float value, int) { return juce::String (value, 1); },
