@@ -1,5 +1,3 @@
-
-
 #pragma once
 
 #include <JuceHeader.h>
@@ -110,16 +108,13 @@ std::atomic<float>  poleReal2    { 0.0f };
 std::atomic<float>  poleImag2    { 0.0f };
 std::atomic<float>  zeroReal2    { 0.0f };
 std::atomic<float>  zeroImag2    { 0.0f };
-    
+std::atomic<float>  plotY         { 0.0f };
+std::atomic<float>  plotX        { 0.0f };
     
 AttachedValue<FilterType> typeAttachment;
 AttachedValue<float> frequencyAttachment;
 AttachedValue<float> gainAttachment;
 AttachedValue<float> qualityAttachment;
-//AttachedValue<float> poleRealAttachment;
-//AttachedValue<float> poleImagAttachment;
-//AttachedValue<float> zeroRealAttachment;
-//AttachedValue<float> zeroImagAttachment;
 AttachedValue<bool>  activeAttachment;
 
 JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (FilterAttachment)
@@ -176,4 +171,3 @@ foleys::AtomicValueAttachment<bool> outputAnalysing;
 JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PolesNZerosAudioProcessor)
 
 };
-

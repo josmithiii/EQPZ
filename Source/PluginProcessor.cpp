@@ -25,6 +25,8 @@ namespace IDs
     static juce::String paramPoleImag2  { "pole-imag2" };
     static juce::String paramZeroReal2  { "zero-real2" };
     static juce::String paramZeroImag2  { "zero-imag2" };
+    static juce::String paramPlotY {"plotY"};
+    static juce::String paramPlotX {"plotX"};
     static juce::String paramActive  { "active" };
 }
 
@@ -58,6 +60,8 @@ std::unique_ptr<juce::AudioProcessorParameterGroup> createParametersForFilter (c
                                                                                float poleImag2= 0.0f,
                                                                                float zeroReal2 = 0.0f,
                                                                                float zeroImag2 = 0.0f,
+                                                                               float plotY = 0.0f,
+                                                                               float plotX = 0.0f,
                                                                                bool  active  = true)
 {
     auto typeParameter = std::make_unique<juce::AudioParameterChoice> (prefix + IDs::paramType,
@@ -157,6 +161,21 @@ std::unique_ptr<juce::AudioProcessorParameterGroup> createParametersForFilter (c
                                                                           juce::NormalisableRange<float> {-0.999f, 0.999f}, zeroImag2,
                                                                       juce::String(),
                                                                       juce::AudioProcessorParameter::genericParameter,
+                                                                           [](float value, int) { return juce::String (value, 1); },
+                                                                           [](const juce::String& text) { return text.getFloatValue(); });
+
+    auto plotYParameter = std::make_unique<juce::AudioParameterFloat> (prefix + IDs::paramPlotY,
+                                                                      name + ": " + TRANS ("Plot Param Y"),
+                                                                          juce::NormalisableRange<float> {-0.999f, 0.999f}, plotY,
+                                                                      juce::String(),
+                                                                      juce::AudioProcessorParameter::genericParameter,
+                                                                      [](float value, int) { return juce::String (value, 1); },
+                                                                      [](const juce::String& text) { return text.getFloatValue(); });
+    auto plotXParameter = std::make_unique<juce::AudioParameterFloat> (prefix + IDs::paramPlotX,
+                                                                      name + ": " + TRANS ("Plot Param X"),
+                                                                          juce::NormalisableRange<float> {-0.999f, 0.999f}, plotX,
+                                                                      juce::String(),
+                                                                      juce::AudioProcessorParameter::genericParameter,
                                                                       [](float value, int) { return juce::String (value, 1); },
                                                                       [](const juce::String& text) { return text.getFloatValue(); });
 
@@ -182,6 +201,8 @@ std::unique_ptr<juce::AudioProcessorParameterGroup> createParametersForFilter (c
                                                                        std::move (poleImagParameter2),
                                                                        std::move (zeroRealParameter2),
                                                                        std::move (zeroImagParameter2),
+                                                                       std::move (plotYParameter),
+                                                                       std::move (plotXParameter),
                                                                        std::move (gainParameter));
 
     return group;
@@ -364,10 +385,6 @@ PolesNZerosAudioProcessor::FilterAttachment::FilterAttachment (juce::AudioProces
     frequencyAttachment (state, frequency, prefix + IDs::paramFreq,     [&]{ updateFilter(); }),
     gainAttachment      (state, gain,      prefix + IDs::paramGain,     [&]{ updateFilter(); }),
     qualityAttachment   (state, quality,   prefix + IDs::paramQuality,  [&]{ updateFilter(); }),
-// poleRealAttachment (state, poleReal, prefix + IDs::paramPoleReal, [&]{updateFilter(); }),
-// poleImagAttachment (state, poleImag, prefix + IDs::paramPoleImag, [&]{updateFilter(); }),
-// zeroRealAttachment (state, zeroReal, prefix + IDs::paramZeroReal, [&]{updateFilter(); }),
-//zeroImagAttachment (state, zeroImag, prefix + IDs::paramZeroImag, [&]{updateFilter(); }),
     activeAttachment    (state, active,    prefix + IDs::paramActive,   [&]
     { if (postFilterUpdate)
         postFilterUpdate (*this);
@@ -379,47 +396,6 @@ PolesNZerosAudioProcessor::FilterAttachment::FilterAttachment (juce::AudioProces
 juce::String PolesNZerosAudioProcessor::FilterAttachment::getPrefix()
 {
     return prefix;
-}
-
-void findPZ(juce::dsp::IIR::Coefficients<float>::Ptr coefficients){
-    
-    //first get values of coefficients
-    //juce::Array<float> coeffVals = coefficients->coefficients;
-    
-    //cast them to complex numbers for safekeeping ( assuming that coefficients are real...which seems reasonable)
-    //zeros (numerator) first
-    /*
-    std::complex<float> a_zero(coeffVals[0], 0.0f);
-    std::complex<float> b_zero(coeffVals[1], 0.0f);
-    std::complex<float> c_zero(coeffVals[2], 0.0f);
-    //poles (denom) second
-    std::complex<float> a_pole(coeffVals[3], 0.0f);
-    std::complex<float> b_pole(coeffVals[4], 0.0f);
-    std::complex<float> c_pole(0.0f, 0.0f); //array only has length 5 for second order filters
-     */
-    
-    //find roots
-    //std::complex<float> zero1 = ((-b_zero) + sqrt((pow(b_zero,2.0f) - (4.0f*a_zero*c_zero))))/(2.0f*a_zero);
-    //std::complex<float> zero2 = ((-b_zero) - sqrt((pow(b_zero,2.0f) - (4.0f*a_zero*c_zero))))/(2.0f*a_zero);
-    //std::complex<float> pole1 = ((-b_pole) + sqrt((pow(b_pole,2.0f) - (4.0f*a_pole*c_pole))))/(2.0f*a_pole);
-    //std::complex<float> pole2 = ((-b_pole) - sqrt((pow(b_pole,2.0f) - (4.0f*a_pole*c_pole))))/(2.0f*a_pole);
-
-   // std::cout <<"zero 1 is "<<zero1<<std::endl;
-   // std::cout <<"zero 2 is "<<zero2<<std::endl;
-   // std::cout <<"pole 1 is "<<pole1<<std::endl;
-   // std::cout <<"pole 2 is "<<pole2<<std::endl;
-
-
-
-    
-    
-    //take .real and .imag
-    //return these somewhere
-    //once the poles and zeros are found, set them in a pole/zero set function
-    //juce::Value paramToEdit = treeState.getParameterAsValue("specCent");, use the same call here (since they
-    //are in the tree
-    return;
-    
 }
 
 void PolesNZerosAudioProcessor::FilterAttachment::updateFilter()
@@ -449,17 +425,12 @@ void PolesNZerosAudioProcessor::FilterAttachment::updateFilter()
         float filtOrder = coefficients->getFilterOrder();
         jassert (filtOrder == 2);
         
-        juce::Array<float> testArr = coefficients->coefficients;
-        std::cout <<"test array abilities"<<testArr[5]<<std::endl;
-        std::cout <<"test array size "<< testArr.size() <<std::endl;
-        
-    
-        
-        
-        
+        //juce::Array<float> testArr = coefficients->coefficients;
+        //std::cout <<"test array abilities"<<testArr[5]<<std::endl;
+        //std::cout <<"test array size "<< testArr.size() <<std::endl;
+
         juce::ScopedLock processLock (callbackLock);
         *filter.state = *coefficients;
-        
         
     }
 
@@ -566,7 +537,9 @@ void PolesNZerosAudioProcessor::handleAsyncUpdate()
             juce::Value ParamToEdit_zi1 = treeState.getParameterAsValue(prefixMaybe + "zero-imag1");
             juce::Value ParamToEdit_zr2 = treeState.getParameterAsValue(prefixMaybe + "zero-real2");
             juce::Value ParamToEdit_zi2 = treeState.getParameterAsValue(prefixMaybe + "zero-imag2");
-            
+            juce::Value ParamToEdit_plotY = treeState.getParameterAsValue(prefixMaybe +"plotY");
+            juce::Value ParamToEdit_plotX = treeState.getParameterAsValue(prefixMaybe +"plotX");
+
             //in here do the bit swapping
             
             //first get values of coefficients
@@ -606,11 +579,9 @@ void PolesNZerosAudioProcessor::handleAsyncUpdate()
             ParamToEdit_zr2 = zero2.real();
             ParamToEdit_zi2 = zero2.imag();
         
-        
-        //repaint(ParamToEdit_pr1);
-       
-        
-            //almost done I think!
+            ParamToEdit_plotY = 0.0f; //unnecessary to have it repeat for each loop but should work
+            ParamToEdit_plotX = 0.0f;
+
             coefficients.push_back (a->coefficients);
     //set the coefficients or steal them depending
     //be careful with the listener
