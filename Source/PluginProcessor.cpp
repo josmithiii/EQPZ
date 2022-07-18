@@ -523,7 +523,7 @@ void PolesNZerosAudioProcessor::handleAsyncUpdate()
     juce::dsp::IIR::Coefficients<float>::Ptr holder;
 
     for (auto* a : attachments){
-        if (1 || a->isActive()) { // FIXME: a->isActive() is always FALSE due to some BUG (in PGM I think)
+        if ( 1 || a->isActive() ) { // FIXME: a->isActive() is always FALSE due to some BUG (in PGM I think)
 
             juce::String prefixMaybe = a->getPrefix();
             std::cout<<"prefix is "<< prefixMaybe << std::endl;
@@ -556,6 +556,9 @@ void PolesNZerosAudioProcessor::handleAsyncUpdate()
             std::complex<float> c_pole(0.0f, 0.0f); //array only has length 5 for second order filters
 
             //find roots
+            static const float MIN_POLE { 1.0e-7f };
+            if (abs(a_pole) < MIN_POLE)
+                a_pole = MIN_POLE;
             std::complex<float> zero1 = ((-b_zero) + sqrt((pow(b_zero,2.0f) - (4.0f*a_zero*c_zero))))/(2.0f*a_zero);
             std::complex<float> zero2 = ((-b_zero) - sqrt((pow(b_zero,2.0f) - (4.0f*a_zero*c_zero))))/(2.0f*a_zero);
             std::complex<float> pole1 = ((-b_pole) + sqrt((pow(b_pole,2.0f) - (4.0f*a_pole*c_pole))))/(2.0f*a_pole);
