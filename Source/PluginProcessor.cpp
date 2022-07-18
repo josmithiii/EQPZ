@@ -422,7 +422,7 @@ void PolesNZerosAudioProcessor::FilterAttachment::updateFilter()
     {
 
         float filtOrder = coefficients->getFilterOrder();
-        jassert (filtOrder == 2);
+        // can be 0 if "No Filter": jassert (filtOrder == 2);
 
         //juce::Array<float> testArr = coefficients->coefficients;
         //std::cout <<"test array abilities"<<testArr[5]<<std::endl;
