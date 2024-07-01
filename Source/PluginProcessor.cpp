@@ -358,7 +358,7 @@ void PolesNZerosAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
     filter.get<6>().setGainLinear (gain);
 
 
-    // GUI MAGIC: measure before processing
+    // GUI MAGIC: input signal before processing
     if (inputAnalysing.get())
         inputAnalyser->pushSamples (buffer);
 
@@ -366,7 +366,7 @@ void PolesNZerosAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
     juce::dsp::ProcessContextReplacing<float> context  (ioBuffer);
     filter.process (context);
 
-    // GUI MAGIC: measure after processing
+    // GUI MAGIC: output signal after processing
     if (outputAnalysing.get())
         outputAnalyser->pushSamples (buffer);
 

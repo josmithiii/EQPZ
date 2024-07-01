@@ -155,53 +155,53 @@
                            tab-caption="" pos-x="0" pos-y="0"/>
           <!-- PGM BUG (I presume): classes override from right to left, so "pole" or "zero" must appear before "pzplot" below: -->
           <XYDragComponent class="pole pzplot nomargin q1" parameter-x="Q1pole-real1" parameter-y="Q1pole-imag1"
-                              tooltip="Drag Pole P1 in Complex Plane"/>
+                           tooltip="Drag Pole P1 in Complex Plane"/>
           <XYDragComponent class="pole pzplot nomargin q1" parameter-x="Q1pole-real2" parameter-y="Q1pole-imag2"
-                              tooltip="Drag Pole P1 in Complex Plane"/>
+                           tooltip="Drag Pole P1 in Complex Plane"/>
           <XYDragComponent class="zero pzplot nomargin q1" parameter-x="Q1zero-real1" parameter-y="Q1zero-imag1"
-                              tooltip="Drag Zero Z1 in Complex Plane" xy-zero="xy-pole"/>
+                           tooltip="Drag Zero Z1 in Complex Plane" xy-zero="xy-pole"/>
           <XYDragComponent class="zero pzplot nomargin q1" parameter-x="Q1zero-real2" parameter-y="Q1zero-imag2"
-                              tooltip="Drag Zero Z1 in Complex Plane" xy-zero="xy-pole"/>
+                           tooltip="Drag Zero Z1 in Complex Plane" xy-zero="xy-pole"/>
           <XYDragComponent class="pole pzplot nomargin q2" parameter-x="Q2pole-real1" parameter-y="Q2pole-imag1"
-                              tooltip="Drag Pole P2 in Complex Plane"/>
+                           tooltip="Drag Pole P2 in Complex Plane"/>
           <XYDragComponent class="pole pzplot nomargin q2" parameter-x="Q2pole-real2" parameter-y="Q2pole-imag2"
-                              tooltip="Drag Pole P2 in Complex Plane"/>
+                           tooltip="Drag Pole P2 in Complex Plane"/>
           <XYDragComponent class="zero pzplot nomargin q2" parameter-x="Q2zero-real1" parameter-y="Q2zero-imag1"
-                              tooltip="Drag Zero Z2 in Complex Plane" xy-zero="xy-pole"/>
+                           tooltip="Drag Zero Z2 in Complex Plane" xy-zero="xy-pole"/>
           <XYDragComponent class="zero pzplot nomargin q2" parameter-x="Q2zero-real2" parameter-y="Q2zero-imag2"
-                              tooltip="Drag Zero Z2 in Complex Plane" xy-zero="xy-pole"/>
+                           tooltip="Drag Zero Z2 in Complex Plane" xy-zero="xy-pole"/>
           <XYDragComponent class="zero pzplot nomargin q3" parameter-x="Q3zero-real1" parameter-y="Q3zero-imag1"
-                              tooltip="Drag Zero Z3 in Complex Plane"/>
+                           tooltip="Drag Zero Z3 in Complex Plane"/>
           <XYDragComponent class="zero pzplot nomargin q3" parameter-x="Q3zero-real2" parameter-y="Q3zero-imag2"
-                              tooltip="Drag Zero Z3 in Complex Plane"/>
+                           tooltip="Drag Zero Z3 in Complex Plane"/>
           <XYDragComponent class="pole pzplot nomargin q3" parameter-x="Q3pole-real1" parameter-y="Q3pole-imag1"
-                              tooltip="Drag Pole P3 in Complex Plane" xy-zero="xy-pole"/>
+                           tooltip="Drag Pole P3 in Complex Plane" xy-zero="xy-pole"/>
           <XYDragComponent class="pole pzplot nomargin q3" parameter-x="Q3pole-real2" parameter-y="Q3pole-imag2"
-                              tooltip="Drag Pole P3 in Complex Plane" xy-zero="xy-pole"/>
+                           tooltip="Drag Pole P3 in Complex Plane" xy-zero="xy-pole"/>
           <XYDragComponent class="zero pzplot nomargin q4" parameter-x="Q4zero-real1" parameter-y="Q4zero-imag1"
-                              tooltip="Drag Zero Z4 in Complex Plane"/>
+                           tooltip="Drag Zero Z4 in Complex Plane"/>
           <XYDragComponent class="zero pzplot nomargin q4" parameter-x="Q4zero-real2" parameter-y="Q4zero-imag2"
-                              tooltip="Drag Zero Z4 in Complex Plane"/>
+                           tooltip="Drag Zero Z4 in Complex Plane"/>
           <XYDragComponent class="pole pzplot nomargin q4" parameter-x="Q4pole-real1" parameter-y="Q4pole-imag1"
-                              tooltip="Drag Pole P4 in Complex Plane" xy-zero="xy-pole"/>
+                           tooltip="Drag Pole P4 in Complex Plane" xy-zero="xy-pole"/>
           <XYDragComponent class="pole pzplot nomargin q4" parameter-x="Q4pole-real2" parameter-y="Q4pole-imag2"
-                              tooltip="Drag Pole P4 in Complex Plane" xy-zero="xy-pole"/>
+                           tooltip="Drag Pole P4 in Complex Plane" xy-zero="xy-pole"/>
           <XYDragComponent class="pole pzplot nomargin q5" parameter-x="Q5pole-real1" parameter-y="Q5pole-imag1"
-                              tooltip="Drag Pole P5 in Complex Plane"/>
+                           tooltip="Drag Pole P5 in Complex Plane"/>
           <XYDragComponent class="pole pzplot nomargin q5" parameter-x="Q5pole-real2" parameter-y="Q5pole-imag2"
-                              tooltip="Drag Pole P5 in Complex Plane"/>
+                           tooltip="Drag Pole P5 in Complex Plane"/>
           <XYDragComponent class="zero pzplot nomargin q5" parameter-x="Q5zero-real1" parameter-y="Q5zero-imag1"
-                              tooltip="Drag Zero Z5 in Complex Plane" xy-zero="xy-pole"/>
+                           tooltip="Drag Zero Z5 in Complex Plane" xy-zero="xy-pole"/>
           <XYDragComponent class="zero pzplot nomargin q5" parameter-x="Q5zero-real2" parameter-y="Q5zero-imag2"
-                              tooltip="Drag Zero Z5 in Complex Plane" xy-zero="xy-pole"/>
+                           tooltip="Drag Zero Z5 in Complex Plane" xy-zero="xy-pole"/>
           <XYDragComponent class="pole pzplot nomargin q6" parameter-x="Q6pole-real1" parameter-y="Q6pole-imag1"
-                              tooltip="Drag Pole P6 in Complex Plane"/>
+                           tooltip="Drag Pole P6 in Complex Plane"/>
           <XYDragComponent class="pole pzplot nomargin q6" parameter-x="Q6pole-real2" parameter-y="Q6pole-imag2"
-                              tooltip="Drag Pole P6 in Complex Plane"/>
+                           tooltip="Drag Pole P6 in Complex Plane"/>
           <XYDragComponent class="zero pzplot nomargin q6" parameter-x="Q6zero-real1" parameter-y="Q6zero-imag1"
-                              tooltip="Drag Zero Z6 in Complex Plane" xy-zero="xy-pole"/>
+                           tooltip="Drag Zero Z6 in Complex Plane" xy-zero="xy-pole"/>
           <XYDragComponent class="zero pzplot nomargin q6" parameter-x="Q6zero-real2" parameter-y="Q6zero-imag2"
-                              tooltip="Drag Zero Z6 in Complex Plane" xy-zero="xy-pole"/>
+                           tooltip="Drag Zero Z6 in Complex Plane" xy-zero="xy-pole"/>
         </View>
       </View>
       <View id="nomargin" background-color="ff343541" class="collapse hidden"
@@ -300,3 +300,4 @@
     </View>
   </View>
 </magic>
+ 
