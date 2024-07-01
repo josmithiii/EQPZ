@@ -1,4 +1,4 @@
 [submodule "PluginGuiMagic"]
 	path = PluginGuiMagic
 	url = git@github.com:josmithiii/PluginGuiMagic.git
-	branch = pole-zero
+	branch = merge
