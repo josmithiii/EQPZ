@@ -514,9 +514,8 @@ void PolesNZerosAudioProcessor::parameterChanged (const juce::String&, float)
 }
 
 void PolesNZerosAudioProcessor::handleAsyncUpdate()
+// Update poles and zeros display from filter coefficients
 {
-
-
 
     std::vector<juce::dsp::IIR::Coefficients<float>::Ptr> coefficients;
     int count = 1;
