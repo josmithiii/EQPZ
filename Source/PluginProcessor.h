@@ -31,7 +31,7 @@ private juce::AsyncUpdater
 {
 public:
 
-using FilterBand = juce::dsp::ProcessorDuplicator<juce::dsp::IIR::Filter<float>, juce::dsp::IIR::Coefficients<float>>;
+using FilterBand = juce::dsp::ProcessorDuplicator</* mono class */ juce::dsp::IIR::Filter<float>, /* state type */ juce::dsp::IIR::Coefficients<float>>; // mono 2 stereo
 using Gain       = juce::dsp::Gain<float>;
 
 enum FilterType

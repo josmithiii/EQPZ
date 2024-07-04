@@ -219,7 +219,8 @@ juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout()
     params.push_back (createParametersForFilter ("Q5", NEEDS_TRANS ("Q5"), PolesNZerosAudioProcessor::HighShelf,  5000.0f));
     params.push_back (createParametersForFilter ("Q6", NEEDS_TRANS ("Q6"), PolesNZerosAudioProcessor::LowPass,   12000.0f));
 
-    auto param = std::make_unique<juce::AudioParameterFloat> (IDs::paramOutput, TRANS ("Output"),
+    auto param = std::make_unique<juce::AudioParameterFloat> (juce::ParameterID (IDs::paramOutput, 1),
+                                                              TRANS ("Output"),
                                                               juce::NormalisableRange<float> (0.0f, 2.0f, 0.01f), 1.0f,
                                                               juce::String(),
                                                               juce::AudioProcessorParameter::genericParameter,
@@ -358,7 +359,6 @@ void PolesNZerosAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
 
     filter.get<6>().setGainLinear (gain);
 
-
     // GUI MAGIC: input signal before processing
     if (inputAnalysing.get())
         inputAnalyser->pushSamples (buffer);
@@ -417,29 +417,22 @@ void PolesNZerosAudioProcessor::FilterAttachment::updateFilter()
         case HighPass:    coefficients = juce::dsp::IIR::Coefficients<float>::makeHighPass (sampleRate, frequency, quality); break;
         case LastFilterID:
         default:          return;
-
     }
 
     {
-
-        float filtOrder = coefficients->getFilterOrder();
+         /* added: */ float filtOrder = coefficients->getFilterOrder();
         // can be 0 if "No Filter": jassert (filtOrder == 2);
-
         //juce::Array<float> testArr = coefficients->coefficients;
         //std::cout <<"test array abilities"<<testArr[5]<<std::endl;
         //std::cout <<"test array size "<< testArr.size() <<std::endl;
 
         juce::ScopedLock processLock (callbackLock);
         *filter.state = *coefficients;
-
     }
 
     if (postFilterUpdate)
         postFilterUpdate (*this);
 }
-
-
-
 
 void PolesNZerosAudioProcessor::FilterAttachment::setSampleRate (double sampleRateToUse)
 {
@@ -514,11 +507,34 @@ void PolesNZerosAudioProcessor::parameterChanged (const juce::String&, float)
     triggerAsyncUpdate();
 }
 
+#if 0
+void PolesNZerosAudioProcessor::handleAsyncUpdateOriginal()
+// Original version from EqualizerExample for reference.
+// Up to here we've only really added new parameters.
+// GUI elements listen to their own parameters so shared params move both knobs and XY sliders.
+// All we need to do is recompute the magnitude frequency-response (MFR) displays.
+{
+    std::vector<juce::dsp::IIR::Coefficients<float>::Ptr> coefficients; // for MFR displays
+    for (auto* a : attachments)
+        if (a->isActive())
+            coefficients.push_back (a->coefficients); // each band has its own juce::dsp::IIR::Coefficients<float>(b0,b1,[b2],a0,a1,[a2])
+
+    plotSum->setIIRCoefficients (gain, coefficients, maxLevel); // send the array of coefficients to MagicFilterPlot
+}
+#endif
+
 void PolesNZerosAudioProcessor::handleAsyncUpdate()
-// Update poles and zeros display from filter coefficients
+// Scheduled by triggerAsyncUpdate() which was called by parameterChanged()
+// We listen to all parameters here.
+// Our job is to update all filter representations when anything changes:
+//   poles and zeros display (XY sliders)
+//   frequency-response display
+//   frequency-response XY sliders
+// I think parameter-knobs and XY-sliders controlling the same parameter
+//   stay in sync because they separately listen to their parameters.
 {
 
-    std::vector<juce::dsp::IIR::Coefficients<float>::Ptr> coefficients;
+    std::vector<juce::dsp::IIR::Coefficients<float>::Ptr> coefficients; // for frequency-response display
     int count = 1;
     juce::dsp::IIR::Coefficients<float>::Ptr holder;
 
