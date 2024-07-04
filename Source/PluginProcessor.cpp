@@ -8,7 +8,7 @@
 
 #include "PluginProcessor.h"
 
-///==============================================================================
+//==============================================================================
 
 namespace IDs
 {
@@ -291,6 +291,8 @@ PolesNZerosAudioProcessor::PolesNZerosAudioProcessor()
 
     inputAnalysing.attachToValue (magicState.getPropertyAsValue ("analyser:input"));
     outputAnalysing.attachToValue (magicState.getPropertyAsValue ("analyser:output"));
+
+    // How to do this in C++?: [[NSApplication sharedApplication] activateIgnoringOtherApps : YES];
 }
 
 PolesNZerosAudioProcessor::~PolesNZerosAudioProcessor()
@@ -359,7 +361,7 @@ void PolesNZerosAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
 
     filter.get<6>().setGainLinear (gain);
 
-    // GUI MAGIC: input signal before processing
+    // GUI MAGIC: display input spectrum (before filtering):
     if (inputAnalysing.get())
         inputAnalyser->pushSamples (buffer);
 
@@ -367,11 +369,11 @@ void PolesNZerosAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
     juce::dsp::ProcessContextReplacing<float> context  (ioBuffer);
     filter.process (context);
 
-    // GUI MAGIC: output signal after processing
+    // GUI MAGIC: display output spectrum (after filtering):
     if (outputAnalysing.get())
         outputAnalyser->pushSamples (buffer);
 
-    outputMeter->pushSamples (buffer);
+    outputMeter->pushSamples (buffer); // level meter
 }
 
 //==============================================================================
@@ -634,6 +636,7 @@ double PolesNZerosAudioProcessor::getTailLengthSeconds() const
 {
     return 0.0;
 }
+
 //==============================================================================
 // This creates new instances of the plugin..
 juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
