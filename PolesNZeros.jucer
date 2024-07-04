@@ -35,7 +35,7 @@
         <MODULEPATH id="juce_gui_extra" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_dsp" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_cryptography" path="~/JUCE/modules"/>
-        <MODULEPATH id="foleys_gui_magic" path="foleys_gui_magic/modules"/>
+        <MODULEPATH id="foleys_gui_magic" path="~/PGM/modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
   </EXPORTFORMATS>
