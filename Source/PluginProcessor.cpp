@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    This file contains the basic framework code for a JUCE plugin processor.
+  Extend the PGM EqualizerExample (EQA) to have a pole-zero plot.
 
   ==============================================================================
 */
@@ -17,6 +17,8 @@ namespace IDs
     static juce::String paramFreq    { "freq" };
     static juce::String paramGain    { "gain" };
     static juce::String paramQuality { "quality" };
+    static juce::String paramActive  { "active" };
+    // Parameters added beyond EqualizerExample for pole-zero plots:
     static juce::String paramPoleReal1  { "pole-real1" };
     static juce::String paramPoleImag1  { "pole-imag1" };
     static juce::String paramZeroReal1  { "zero-real1" };
@@ -27,7 +29,6 @@ namespace IDs
     static juce::String paramZeroImag2  { "zero-imag2" };
     static juce::String paramPlotY {"plotY"};
     static juce::String paramPlotX {"plotX"};
-    static juce::String paramActive  { "active" };
 }
 
 juce::StringArray filterNames =
@@ -64,19 +65,19 @@ std::unique_ptr<juce::AudioProcessorParameterGroup> createParametersForFilter (c
                                                                                float plotX = 0.0f,
                                                                                bool  active  = true)
 {
-    auto typeParameter = std::make_unique<juce::AudioParameterChoice> (prefix + IDs::paramType,
+    auto typeParameter = std::make_unique<juce::AudioParameterChoice> (juce::ParameterID (prefix + IDs::paramType, 1),
                                                                        name + ": " + TRANS ("Filter Type"),
                                                                        filterNames,
                                                                        type);
 
-    auto actvParameter = std::make_unique<juce::AudioParameterBool> (prefix + IDs::paramActive,
+    auto actvParameter = std::make_unique<juce::AudioParameterBool> (juce::ParameterID (prefix + IDs::paramActive, 1),
                                                                      name + ": " + TRANS ("Active"),
                                                                      active,
                                                                      juce::String(),
                                                                      [](float value, int) {return value > 0.5f ? TRANS ("active") : TRANS ("bypassed");},
                                                                      [](juce::String text) {return text == TRANS ("active");});
 
-    auto freqParameter = std::make_unique<juce::AudioParameterFloat> (prefix + IDs::paramFreq,
+    auto freqParameter = std::make_unique<juce::AudioParameterFloat> (juce::ParameterID (prefix + IDs::paramFreq, 1),
                                                                       name + ": " + TRANS ("Frequency"),
                                                                       foleys::Conversions::makeLogarithmicRange<float>(20.0f, 20000.0f),
                                                                       frequency,
@@ -89,7 +90,7 @@ std::unique_ptr<juce::AudioProcessorParameterGroup> createParametersForFilter (c
                                                                         text.getFloatValue() * 1000.0f :
                                                                         text.getFloatValue(); });
 
-    auto qltyParameter = std::make_unique<juce::AudioParameterFloat> (prefix + IDs::paramQuality,
+    auto qltyParameter = std::make_unique<juce::AudioParameterFloat> (juce::ParameterID (prefix + IDs::paramQuality, 1),
                                                                       name + ": " + TRANS ("Quality"),
                                                                       juce::NormalisableRange<float> {0.1f, 10.0f, 0.1f, std::log (0.5f) / std::log (0.9f / 9.9f)},
                                                                       quality,
@@ -98,7 +99,7 @@ std::unique_ptr<juce::AudioProcessorParameterGroup> createParametersForFilter (c
                                                                       [](float value, int) { return juce::String (value, 1); },
                                                                       [](const juce::String& text) { return text.getFloatValue(); });
 
-    auto poleRealParameter1 = std::make_unique<juce::AudioParameterFloat> (prefix + IDs::paramPoleReal1,
+    auto poleRealParameter1 = std::make_unique<juce::AudioParameterFloat> (juce::ParameterID (prefix + IDs::paramPoleReal1, 1),
                                                                       name + ": " + TRANS ("Pole Real Part1"),
                                                                       juce::NormalisableRange<float> {-0.999f, 0.999f}, poleReal1,
                                                                       juce::String(),
@@ -106,7 +107,7 @@ std::unique_ptr<juce::AudioProcessorParameterGroup> createParametersForFilter (c
                                                                       [](float value, int) { return juce::String (value, 1); },
                                                                       [](const juce::String& text) { return text.getFloatValue(); });
 
-    auto poleImagParameter1 = std::make_unique<juce::AudioParameterFloat> (prefix + IDs::paramPoleImag1,
+    auto poleImagParameter1 = std::make_unique<juce::AudioParameterFloat> (juce::ParameterID (prefix + IDs::paramPoleImag1, 1),
                                                                       name + ": " + TRANS ("Pole Imag Part1"),
                                                                           juce::NormalisableRange<float> {-0.999f, 0.999f}, poleImag1,
                                                                       juce::String(),
@@ -114,7 +115,7 @@ std::unique_ptr<juce::AudioProcessorParameterGroup> createParametersForFilter (c
                                                                       [](float value, int) { return juce::String (value, 1); },
                                                                       [](const juce::String& text) { return text.getFloatValue(); });
 
-    auto zeroRealParameter1 = std::make_unique<juce::AudioParameterFloat> (prefix + IDs::paramZeroReal1,
+    auto zeroRealParameter1 = std::make_unique<juce::AudioParameterFloat> (juce::ParameterID (prefix + IDs::paramZeroReal1, 1),
                                                                       name + ": " + TRANS ("Zero Real Part1"),
                                                                           juce::NormalisableRange<float> {-0.999f, 0.999f}, zeroReal1,
                                                                       juce::String(),
@@ -122,7 +123,7 @@ std::unique_ptr<juce::AudioProcessorParameterGroup> createParametersForFilter (c
                                                                       [](float value, int) { return juce::String (value, 1); },
                                                                       [](const juce::String& text) { return text.getFloatValue(); });
 
-    auto zeroImagParameter1 = std::make_unique<juce::AudioParameterFloat> (prefix + IDs::paramZeroImag1,
+    auto zeroImagParameter1 = std::make_unique<juce::AudioParameterFloat> (juce::ParameterID (prefix + IDs::paramZeroImag1, 1),
                                                                       name + ": " + TRANS ("Zero Imag Part1"),
                                                                           juce::NormalisableRange<float> {-0.999f, 0.999f}, zeroImag1,
                                                                       juce::String(),
@@ -130,7 +131,7 @@ std::unique_ptr<juce::AudioProcessorParameterGroup> createParametersForFilter (c
                                                                       [](float value, int) { return juce::String (value, 1); },
                                                                       [](const juce::String& text) { return text.getFloatValue(); });
 
-    auto poleRealParameter2 = std::make_unique<juce::AudioParameterFloat> (prefix + IDs::paramPoleReal2,
+    auto poleRealParameter2 = std::make_unique<juce::AudioParameterFloat> (juce::ParameterID (prefix + IDs::paramPoleReal2, 1),
                                                                       name + ": " + TRANS ("Pole Real Part2"),
                                                                       juce::NormalisableRange<float> {-0.999f, 0.999f}, poleReal2,
                                                                       juce::String(),
@@ -138,7 +139,7 @@ std::unique_ptr<juce::AudioProcessorParameterGroup> createParametersForFilter (c
                                                                       [](float value, int) { return juce::String (value, 1); },
                                                                       [](const juce::String& text) { return text.getFloatValue(); });
 
-    auto poleImagParameter2 = std::make_unique<juce::AudioParameterFloat> (prefix + IDs::paramPoleImag2,
+    auto poleImagParameter2 = std::make_unique<juce::AudioParameterFloat> (juce::ParameterID (prefix + IDs::paramPoleImag2, 1),
                                                                       name + ": " + TRANS ("Pole Imag Part2"),
                                                                           juce::NormalisableRange<float> {-0.999f, 0.999f}, poleImag2,
                                                                       juce::String(),
@@ -146,7 +147,7 @@ std::unique_ptr<juce::AudioProcessorParameterGroup> createParametersForFilter (c
                                                                       [](float value, int) { return juce::String (value, 1); },
                                                                       [](const juce::String& text) { return text.getFloatValue(); });
 
-    auto zeroRealParameter2 = std::make_unique<juce::AudioParameterFloat> (prefix + IDs::paramZeroReal2,
+    auto zeroRealParameter2 = std::make_unique<juce::AudioParameterFloat> (juce::ParameterID (prefix + IDs::paramZeroReal2, 1),
                                                                       name + ": " + TRANS ("Zero Real Part1"),
                                                                           juce::NormalisableRange<float> {-0.999f, 0.999f}, zeroReal2,
 
@@ -155,7 +156,7 @@ std::unique_ptr<juce::AudioProcessorParameterGroup> createParametersForFilter (c
                                                                       [](float value, int) { return juce::String (value, 1); },
                                                                       [](const juce::String& text) { return text.getFloatValue(); });
 
-    auto zeroImagParameter2 = std::make_unique<juce::AudioParameterFloat> (prefix + IDs::paramZeroImag2,
+    auto zeroImagParameter2 = std::make_unique<juce::AudioParameterFloat> (juce::ParameterID (prefix + IDs::paramZeroImag2, 1),
                                                                       name + ": " + TRANS ("Zero Imag Part2"),
                                                                           juce::NormalisableRange<float> {-0.999f, 0.999f}, zeroImag2,
                                                                       juce::String(),
@@ -163,14 +164,14 @@ std::unique_ptr<juce::AudioProcessorParameterGroup> createParametersForFilter (c
                                                                            [](float value, int) { return juce::String (value, 1); },
                                                                            [](const juce::String& text) { return text.getFloatValue(); });
 
-    auto plotYParameter = std::make_unique<juce::AudioParameterFloat> (prefix + IDs::paramPlotY,
+    auto plotYParameter = std::make_unique<juce::AudioParameterFloat> (juce::ParameterID (prefix + IDs::paramPlotY, 1),
                                                                       name + ": " + TRANS ("Plot Param Y"),
                                                                           juce::NormalisableRange<float> {-0.999f, 0.999f}, plotY,
                                                                       juce::String(),
                                                                       juce::AudioProcessorParameter::genericParameter,
                                                                       [](float value, int) { return juce::String (value, 1); },
                                                                       [](const juce::String& text) { return text.getFloatValue(); });
-    auto plotXParameter = std::make_unique<juce::AudioParameterFloat> (prefix + IDs::paramPlotX,
+    auto plotXParameter = std::make_unique<juce::AudioParameterFloat> (juce::ParameterID (prefix + IDs::paramPlotX, 1),
                                                                       name + ": " + TRANS ("Plot Param X"),
                                                                           juce::NormalisableRange<float> {-0.999f, 0.999f}, plotX,
                                                                       juce::String(),
@@ -178,7 +179,7 @@ std::unique_ptr<juce::AudioProcessorParameterGroup> createParametersForFilter (c
                                                                       [](float value, int) { return juce::String (value, 1); },
                                                                       [](const juce::String& text) { return text.getFloatValue(); });
 
-    auto gainParameter = std::make_unique<juce::AudioParameterFloat> (prefix + IDs::paramGain,
+    auto gainParameter = std::make_unique<juce::AudioParameterFloat> (juce::ParameterID (prefix + IDs::paramGain, 1),
                                                                       name + ": " + TRANS ("Gain"),
                                                                       juce::NormalisableRange<float> {-maxLevel, maxLevel, 0.1f},
                                                                       gain,
